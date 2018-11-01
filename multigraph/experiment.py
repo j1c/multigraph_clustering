@@ -153,8 +153,12 @@ class MultiGraphCluster():
 
         Zhat = np.hstack([Xhat, Yhat])
         Zhat = Zhat.reshape((n_graphs, n_vertices, -1))
+        self.Zhat = Zhat
 
         Dhat, dissimilarity = self._run_cmds(Zhat)
+        # Make class attributes
+        self.dissimilarity_matrix_ = dissimilarity
+        self.dhat_ = Dhat
 
         # Run mgc
 
@@ -164,7 +168,3 @@ class MultiGraphCluster():
         self.gclust_ari_plot_ = gclust_ari_plot
         self.gclust_ari_ = gclust.ari_
         self.gclust_bic_ = gclust.bic_
-
-        # Make class attributes
-        self.dissimilarity_matrix_ = dissimilarity
-        self.dhat_ = Dhat

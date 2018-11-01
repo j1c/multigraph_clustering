@@ -9,6 +9,7 @@ class MultiGraphCluster():
     def __init__(self,
                  transform='zero-boost',
                  laplacian=None,
+                 n_elbows=2,
                  kclusters=50,
                  gclusters=50,
                  random_state=None):
@@ -32,6 +33,7 @@ class MultiGraphCluster():
         """
         self.transform = transform
         self.laplacian = laplacian
+        self.n_elbows = n_elbows
         self.kclusters = kclusters
         self.gclusters = gclusters
         self.random_state = random_state
@@ -58,7 +60,7 @@ class MultiGraphCluster():
         return pval, data
 
     def _run_omni(self, graphs):
-        omni = gs.embed.OmnibusEmbed()
+        omni = gs.embed.OmnibusEmbed(n_elbows=self.n_elbows)
         Xhat = omni.fit_transform(graphs)
 
         return Xhat
@@ -84,13 +86,13 @@ class MultiGraphCluster():
         else:
             title = "GClust o cMDS o Omni o ZG(2)"
         bic_plot = self._plot_scatter(
-            range(1, self.gclusters), gclust.bic_, "Number of Clusters", "BIC",
-            title)
+            range(1, self.gclusters + 1), gclust.bic_, "Number of Clusters",
+            "BIC", title)
 
         # ari plot
         ari_plot = self._plot_scatter(
-            range(1, self.gclusters), gclust.ari_, "Number of Clusters", "ARI",
-            title)
+            range(1, self.gclusters + 1), gclust.ari_, "Number of Clusters",
+            "ARI", title)
 
         return gclust, bic_plot, ari_plot
 
@@ -112,13 +114,13 @@ class MultiGraphCluster():
         else:
             title = "KMeans o vec(A)"
         silhouette_plot = self._plot_scatter(
-            range(1, self.kclusters), kclust.silhouette_, "Number of Clusters",
-            "Silhouette Score", title)
+            range(2, self.kclusters + 1), kclust.silhouette_,
+            "Number of Clusters", "Silhouette Score", title)
 
         # ari plot
         ari_plot = self._plot_scatter(
-            range(1, self.kclusters), kclust.ari_, "Number of Clusters", "ARI",
-            title)
+            range(2, self.kclusters + 1), kclust.ari_, "Number of Clusters",
+            "ARI", title)
 
         return kclust, silhouette_plot, ari_plot
 

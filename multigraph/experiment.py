@@ -1,5 +1,6 @@
 import graspy as gs
 import numpy as np
+import matplotlib.pyplot as plt
 import seaborn as sns
 from mgcpy.independence_tests.mgc.mgc import MGC
 

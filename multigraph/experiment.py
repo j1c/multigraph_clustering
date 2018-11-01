@@ -1,6 +1,7 @@
 import graspy as gs
 import numpy as np
 import matplotlib.pyplot as plt
+import pandas as pd
 import seaborn as sns
 from mgcpy.independence_tests.mgc.mgc import MGC
 
@@ -39,7 +40,7 @@ class MultiGraphCluster():
         self.random_state = random_state
 
     def _process_graphs(self, graphs, transform=None, laplacian=None):
-        X = [gs.utils.import_graph(i) for i in graphs]
+        X = [gs.utils.import_graph(i).copy() for i in graphs]
         if transform is not None:
             X = [gs.utils.pass_to_ranks(i, method=transform) for i in X]
         if laplacian is not None:
@@ -52,6 +53,12 @@ class MultiGraphCluster():
             plot = sns.scatterplot(X, Y)
             plot.set(xlabel=xlablel, ylabel=ylabel, title=title)
         return plot
+
+    def _plot_ari(self, title):
+        df = 
+        with sns.plotting_context("talk", font_scale=1):
+            fig = plt.figure(figsize=(10, 6))
+            plot = sns
 
     def _run_mgc(self, X, Y):
         mgc = MGC(X, Y, None)
@@ -82,9 +89,9 @@ class MultiGraphCluster():
 
         # bic plot
         if self.transform is not None:
-            title = "GClust o cMDS o Omni o ZG(2) o PTR"
+            title = "GClust o cMDS o Omni o ZG({}) o PTR".format(self.n_elbows)
         else:
-            title = "GClust o cMDS o Omni o ZG(2)"
+            title = "GClust o cMDS o Omni o ZG({})".format(self.n_elbows)
         bic_plot = self._plot_scatter(
             range(1, self.gclusters + 1), gclust.bic_, "Number of Clusters",
             "BIC", title)

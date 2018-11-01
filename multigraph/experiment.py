@@ -131,6 +131,9 @@ class MultiGraphCluster():
         X_graphs = self._process_graphs(X, self.transform, self.laplacian)
         Y_graphs = self._process_graphs(Y, self.transform, self.laplacian)
 
+        self.X_graphs_ = X_graphs
+        self.Y_graphs_ = Y_graphs
+
         for x, y in zip(X_graphs, Y_graphs):
             assert x.shape == y.shape
 

@@ -11,6 +11,8 @@ class MultiGraphCluster():
                  transform='zero-boost',
                  laplacian=None,
                  n_elbows=2,
+                 omni_dimensions=None,
+                 mds_dimensions=None,
                  kclusters=50,
                  gclusters=50,
                  random_state=None):
@@ -35,6 +37,8 @@ class MultiGraphCluster():
         self.transform = transform
         self.laplacian = laplacian
         self.n_elbows = n_elbows
+        self.omni_dimensions = omni_dimensions
+        self.mds_dimensions = mds_dimensions
         self.kclusters = kclusters
         self.gclusters = gclusters
         self.random_state = random_state
@@ -55,7 +59,6 @@ class MultiGraphCluster():
         return plot
 
     def _plot_ari(self, title):
-        df = 
         with sns.plotting_context("talk", font_scale=1):
             fig = plt.figure(figsize=(10, 6))
             plot = sns
@@ -67,14 +70,17 @@ class MultiGraphCluster():
         return pval, data
 
     def _run_omni(self, graphs):
-        omni = gs.embed.OmnibusEmbed(n_elbows=self.n_elbows)
+        if self.omni_dimensions is not None:
+            omni = gs.embed.OmnibusEmbed(k=self.omni_dimensions)
+        else:
+            omni = gs.embed.OmnibusEmbed(n_elbows=self.n_elbows)
         Xhat = omni.fit_transform(graphs)
-
         return Xhat
 
     def _run_cmds(self, X):
         print("Running cMDS")
-        cmds = gs.embed.ClassicalMDS()
+        if self.mds_dimensions is not None:
+            cmds = gs.embed.ClassicalMDS(k=self.mds_dimensions)
         Dhat = cmds.fit_transform(X)
         dissimilarity = cmds.dissimilarity_matrix_
 

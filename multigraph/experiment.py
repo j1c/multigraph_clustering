@@ -131,9 +131,6 @@ class MultiGraphCluster():
         X_graphs = self._process_graphs(X, self.transform, self.laplacian)
         Y_graphs = self._process_graphs(Y, self.transform, self.laplacian)
 
-        self.X_graphs_ = X_graphs
-        self.Y_graphs_ = Y_graphs
-
         for x, y in zip(X_graphs, Y_graphs):
             assert x.shape == y.shape
 
@@ -153,8 +150,8 @@ class MultiGraphCluster():
 
         # Run omni
         print("Running graph embedding")
-        Xhat = self._run_omni(X)
-        Yhat = self._run_omni(Y)
+        Xhat = self._run_omni(X_graphs)
+        Yhat = self._run_omni(Y_graphs)
 
         Zhat = np.hstack([Xhat, Yhat])
         Zhat = Zhat.reshape((n_graphs, n_vertices, -1))

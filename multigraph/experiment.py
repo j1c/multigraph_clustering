@@ -81,6 +81,9 @@ class MultiGraphCluster():
         print("Running cMDS")
         if self.mds_dimensions is not None:
             cmds = gs.embed.ClassicalMDS(k=self.mds_dimensions)
+        else:
+            cmds = gs.embed.ClassicalMDS()
+
         Dhat = cmds.fit_transform(X)
         dissimilarity = cmds.dissimilarity_matrix_
 

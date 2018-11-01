@@ -76,7 +76,7 @@ class MultiGraphCluster():
             self.gclusters))
         gclust = gs.cluster.GaussianCluster(
             max_components=self.gclusters, random_state=self.random_state)
-        gclust.fit(X, y)
+        gclust.fit(X, Y)
 
         # bic plot
         if self.transform is not None:

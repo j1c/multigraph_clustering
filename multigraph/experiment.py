@@ -80,7 +80,7 @@ class MultiGraphCluster():
     def _run_cmds(self, X):
         print("Running cMDS")
         if self.mds_dimensions is not None:
-            cmds = gs.embed.ClassicalMDS(k=self.mds_dimensions)
+            cmds = gs.embed.ClassicalMDS(n_components=self.mds_dimensions)
         else:
             cmds = gs.embed.ClassicalMDS()
 

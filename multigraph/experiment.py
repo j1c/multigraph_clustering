@@ -71,7 +71,7 @@ class MultiGraphCluster():
 
     def _run_omni(self, graphs):
         if self.omni_dimensions is not None:
-            omni = gs.embed.OmnibusEmbed(k=self.omni_dimensions)
+            omni = gs.embed.OmnibusEmbed(n_components=self.omni_dimensions)
         else:
             omni = gs.embed.OmnibusEmbed(n_elbows=self.n_elbows)
         Xhat = omni.fit_transform(graphs)
